@@ -14,7 +14,7 @@ export default class DataBaseModel {
         this.name = config.database
         this.db = {};
 
-        this.db.associate = this.associate
+        this.db.asssociate = this.associate
         this.sequelize = new Sequelize(config.database, config.user, config.password, {
             host: config.host,
             port: config.port,
