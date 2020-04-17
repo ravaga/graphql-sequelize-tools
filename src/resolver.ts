@@ -15,10 +15,9 @@ export default class ResolverModel {
     result: any
     find: any
 
-    constructor(model, args) {
+    constructor( model , args) {
         this._model_ = model;
         this.result = undefined;
-
         let q = this.buildArgs(args)
         this.args = q
     }

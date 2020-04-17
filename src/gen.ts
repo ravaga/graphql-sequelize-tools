@@ -5,6 +5,7 @@ export default class RslvGenerator {
     public obj: any
 
     constructor(config: any) {
+        console.log('RsvlGenerator Constructor')
         this.config = config
         this.db = config.db
         this.obj = {}
@@ -34,7 +35,6 @@ export default class RslvGenerator {
             //Singular GetByID
             this.obj.Query[`${k}`] = async ( _ , args , {models, resolve}) => {  
                 let db = model.db ? model.db : this.db;
-                console.log('THIS PRIMARY KEY', args.where[`${primary_key}`] );
                 return await new resolve( models[`${db}`][`${k}`],  {primary_key:primary_key})
                     .findByID( args.where[`${primary_key}`] )
             }

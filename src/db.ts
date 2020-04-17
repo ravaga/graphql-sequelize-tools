@@ -2,7 +2,6 @@
 import * as fs from "fs"
 import { join } from "path"
 import { Sequelize } from "sequelize"
-
 export default class DataBaseModel {
 
     public name: string
@@ -13,8 +12,7 @@ export default class DataBaseModel {
 
         this.name = config.database
         this.db = {};
-
-        this.db.asssociate = this.associate
+        this.db.associate = this.associate
         this.sequelize = new Sequelize(config.database, config.user, config.password, {
             host: config.host,
             port: config.port,
@@ -27,7 +25,7 @@ export default class DataBaseModel {
             define: {
                 timestamps: config.timestamps || false
             },
-            logging: false//config.log || console.log
+            logging: config.log || console.log
         });
 
         try {
@@ -56,17 +54,22 @@ export default class DataBaseModel {
                 const model = this.sequelize.import(join(p, file));
                 this.db[model.name] = model;
             });
+
         this.db.sequelize = this.sequelize
         this.db.Sequelize = Sequelize
         return this.db
     }
 
     public associate(db, relatives) {
+        
         Object.keys(db).forEach((modelName) => {
             if ("associate" in db[modelName]) {
                 db[modelName].associate(db, relatives);
             }
         })
+
         return db;
     }
+
+
 }
