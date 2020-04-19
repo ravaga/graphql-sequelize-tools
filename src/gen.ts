@@ -5,7 +5,6 @@ export default class RslvGenerator {
     public obj: any
 
     constructor(config: any) {
-        console.log('RsvlGenerator Constructor')
         this.config = config
         this.db = config.db
         this.obj = {}
