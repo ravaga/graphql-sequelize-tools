@@ -84,6 +84,30 @@ export default class RslvGenerator {
                 }
             }
         })
-        return this.getObj()
+        return this
+    }
+
+    public extend( obj : any ){
+
+        let extensions = ['Query', 'Mutation'];
+
+        extensions.map( e => {
+
+            if( obj[e] !== undefined )
+            {
+                let keys = Object.keys( obj[e] );
+                if(keys.length >= 1)
+                {
+                    keys.map( k => {
+
+                        if(typeof obj[e][k] === 'function')
+                        {
+                            this.obj[ e ][ k ] = obj[e][k]
+                        }
+                    })
+                }
+            }
+        });
+        return this
     }
 }
