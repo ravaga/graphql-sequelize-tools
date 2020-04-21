@@ -26,9 +26,7 @@ export const TypeDefsBuilder = async ( models ) => {
 
 }
 
-export const StackBuilder = async (config) => {
-
-    const { extend } = config;
+export const StackBuilder = async (config, extend = null ) => {
 
     //Load Models
     const models = await new DatabaseStack( config ).expose();

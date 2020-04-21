@@ -52,8 +52,12 @@ export default class RslvGenerator {
             })
 
             let { associations } = model;
+
             if(associations)
             {
+
+                let { extend } = associations;
+
                 this.obj[`${y}`] = {}
                 let { findAll , findOne } = associations;
                 if(findOne && findOne.length >= 1)
@@ -82,6 +86,18 @@ export default class RslvGenerator {
                         }
                    }) 
                 }
+
+                if(extend)
+                {
+                    let extendKeys = Object.keys(extend)
+                    if(extendKeys.length >= 1)
+                    {
+                        extendKeys.map( ek =>{
+                            this.obj[`${y}`][ek] = extend[ek]
+                        })
+                    }
+                }
+
             }
         })
         return this
