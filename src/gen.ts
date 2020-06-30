@@ -34,13 +34,13 @@ export default class RslvGenerator {
             //Singular GetByID
             this.obj.Query[`${k}`] = async ( _ , args , {models, resolve}) => {  
                 let db = model.db ? model.db : this.db;
-                return await new resolve( models[`${db}`][`${k}`],  {primary_key:primary_key})
+                return await new resolve( models[`${db}`][`${k}`],  {primary_key:primary_key, ...args})
                     .findByID( args.where[`${primary_key}`] )
             }
             //Plural FindAll
             this.obj.Query[`${k}s`] = async ( _ , args , {models, resolve} ) => {
                 let db = model.db ? model.db : this.db;
-                return await new resolve( models[`${db}`][`${k}`], {primary_key:primary_key} ).findAll()
+                return await new resolve( models[`${db}`][`${k}`], {primary_key:primary_key, ...args} ).findAll()
             }
 
             //Mutations

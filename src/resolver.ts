@@ -23,7 +23,7 @@ export default class ResolverModel {
     }
 
     buildArgs(q) {
-        
+        console.log('THIS ARGS', q );
         q = q || {}
         let { distinct, include, where, order, limit, skip , primary_key } = q
         this._pKey_ = primary_key ? primary_key : 'id' 
