@@ -46,7 +46,7 @@ export default class RslvGenerator {
             //Mutations
             const y = k.charAt(0).toUpperCase() + k.slice(1)
             crud.map( c => {
-                this.obj.Mutation[`${c}${y}`] = async ( _ , args , cntx, resolve ) =>{
+                this.obj.Mutation[`${c}${y}`] = async ( _ , args , cntx, {resolve} ) =>{
                     return await new resolve( cntx.models[`${this.db}`][`${k}`])[`${c}`](args)
                 }
             })
