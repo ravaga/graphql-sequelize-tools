@@ -3,6 +3,7 @@ import DatabaseStack from './stack';
 import { GraphQLSchema , GraphQLError} from 'graphql'
 import { generateSchema, GroupModels } from './gen'
 import { GetUser } from './auth';
+import { createContext } from 'dataloader-sequelize'
 
 export const ContextBuilder = async (dbs, extend) => {
 
@@ -46,8 +47,13 @@ export const StackBuilder = async (config, extend = null) => {
     //Build Schemas
     const schemas = await generateSchema(dbs)
 
+    const models = GroupModels( dbs );
+
     return {
-        context,
+        context:{
+            ...context,
+            dataloaderContext: createContext(models)
+        },
         schema: new GraphQLSchema(schemas),
         models:GroupModels(dbs),
     }
