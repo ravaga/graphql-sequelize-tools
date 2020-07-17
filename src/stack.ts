@@ -9,7 +9,7 @@ export default class DatabaseStack {
 
     constructor(dbs: any) {
         this.dbs = {};
-        this.root = dirname(require.main.filename || process.mainModule.filename )
+        this.root = dirname( require.main.filename )
         
         this.init(dbs);
     }
