@@ -1,4 +1,5 @@
 import * as fs from 'fs'
+import { join,  dirname } from "path"
 import { GraphQLObjectType, GraphQLInputObjectType, GraphQLList, GraphQLInt, GraphQLString, GraphQLNonNull } from 'graphql'
 import { resolver, attributeFields, defaultListArgs, defaultArgs } from 'graphql-sequelize'
 import { EXPECTED_OPTIONS_KEY } from 'dataloader-sequelize'
@@ -6,7 +7,7 @@ import _ from 'lodash'
 import * as helper from './helpers'
 
 // Dir for customs graphs
-const customQueryPath = './custom'
+const customQueryPath = join( dirname( require.main.filename ) , 'custom' )
 // Cache fix
 let cache = {}
 
@@ -209,22 +210,23 @@ export const generateQueryRootType = (models, outputTypes) => {
         })
     }, {})
 
+
     let customQueries = {}
     if (fs.existsSync(`${customQueryPath}/query`)) {
         fs.readdirSync(`${customQueryPath}/query`)
-            .filter(file => file.slice(-3) === '.js')
+            .filter(file => file.slice(-3) === '.ts')
             .forEach((file) => {
                 let objQuery = require(`${customQueryPath}/query/${file}`)
 
-                if (!objQuery['name']) objQuery['name'] = file.replace('.js', '')
+                if (!objQuery['name']) objQuery['name'] = file.replace('.ts', '')
 
-                customQueries[objQuery['name']] = objQuery
+                customQueries[objQuery['name']] = objQuery.default
             })
     }
 
     return new GraphQLObjectType({
         name: 'Root_Query',
-        fields: Object.assign(fields, customQueries)
+        fields: Object.assign( fields , customQueries )
     })
 }
 
@@ -316,11 +318,11 @@ export const generateMutationRootType = (models, inputTypes, outputTypes) => {
     let customQueries = {}
     if (fs.existsSync(`${customQueryPath}/mutation`)) {
         fs.readdirSync(`${customQueryPath}/mutation`)
-            .filter(file => file.slice(-3) === '.js')
+            .filter(file => file.slice(-3) === '.ts')
             .forEach((file) => {
                 let objQuery = require(`${customQueryPath}/mutation/${file}`)
 
-                if (!objQuery['name']) objQuery['name'] = file.replace('.js', '')
+                if (!objQuery['name']) objQuery['name'] = file.replace('.ts', '')
 
                 customQueries[objQuery['name']] = objQuery
             })
@@ -363,7 +365,7 @@ export const GroupModels = (dbs) => {
 
 
 // This function is exported
-export const generateSchema = async (dbs, types = null) => {
+export const generateSchema = async ( dbs , types = null) => {
 
     let models = GroupModels(dbs)
 

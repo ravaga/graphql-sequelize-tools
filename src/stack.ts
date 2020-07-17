@@ -1,4 +1,3 @@
-import * as fs from "fs"
 import { join , dirname } from "path"
 import { DataBaseModel } from './';
 
