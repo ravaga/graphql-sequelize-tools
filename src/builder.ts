@@ -47,12 +47,20 @@ export const StackBuilder = async (config, extend = null) => {
     //Build Schemas
     const schemas = await generateSchema(dbs)
 
-    const models = GroupModels( dbs );
+    let dataloaderContext = {}
+    
+    for(let key in dbs){
+        let cntx = createContext( dbs[key].sequelize );
+        dataloaderContext = {
+            ...dataloaderContext,
+            ...cntx
+        }
+    }
 
     return {
         context:{
             ...context,
-            dataloaderContext: createContext(models)
+            dataloaderContext
         },
         schema: new GraphQLSchema(schemas),
         models:GroupModels(dbs),

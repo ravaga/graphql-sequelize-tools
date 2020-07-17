@@ -56,7 +56,7 @@ export default class DataBaseModel {
             });
 
         this.db.sequelize = this.sequelize
-        this.db.Sequelize = Sequelize
+        //this.db.Sequelize = Sequelize
         return this.db
     }
 
