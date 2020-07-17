@@ -3,7 +3,7 @@ import { join,  dirname } from "path"
 import { GraphQLObjectType, GraphQLInputObjectType, GraphQLList, GraphQLInt, GraphQLString, GraphQLNonNull } from 'graphql'
 import { resolver, attributeFields, defaultListArgs, defaultArgs } from 'graphql-sequelize'
 import { EXPECTED_OPTIONS_KEY } from 'dataloader-sequelize'
-import _ from 'lodash'
+import * as _ from 'lodash'
 import * as helper from './helpers'
 
 // Dir for customs graphs
