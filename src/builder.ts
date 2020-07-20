@@ -47,15 +47,15 @@ export const StackBuilder = async (config, extend = null) => {
     //Build Schemas
     const schemas = await generateSchema(dbs)
 
-    let dataloaderContext = {}
+    // let dataloaderContext = {}
     
-    for(let key in dbs){
-        let cntx = createContext( dbs[key].sequelize );
-        dataloaderContext = {
-            ...dataloaderContext,
-            ...cntx
-        }
-    }
+    // for(let key in dbs){
+    //     let cntx = createContext( dbs[key].sequelize );
+    //     dataloaderContext = {
+    //         ...dataloaderContext,
+    //         ...cntx
+    //     }
+    // }
 
     return {
         context,
