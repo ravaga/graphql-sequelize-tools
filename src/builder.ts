@@ -58,10 +58,7 @@ export const StackBuilder = async (config, extend = null) => {
     }
 
     return {
-        context:{
-            ...context,
-            dataloaderContext
-        },
+        context,
         schema: new GraphQLSchema(schemas),
         models:GroupModels(dbs),
     }
